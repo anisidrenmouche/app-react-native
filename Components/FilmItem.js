@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     color: '#666666'
   },
   description_container: {
-    flex: 7
+    flex: 6
   },
   description_text: {
     fontStyle: 'italic',
     color: '#666666',
-    marginTop:3,
+    marginTop:2,
   },
   date_container: {
     flex: 1
