@@ -2,6 +2,8 @@
 
 import React from 'react'
 import { StyleSheet, View, Text, Image } from 'react-native'
+import { getImageFromApi } from '../API/TMDBApi'
+
 
 class FilmItem extends React.Component {
     render() {
@@ -10,7 +12,8 @@ class FilmItem extends React.Component {
           <View style={styles.main_container}>
             <Image
               style={styles.image}
-              source={{uri: "image"}}
+              source={{uri: getImageFromApi(film.poster_path)}}
+
             />
             <View style={styles.content_container}>
               <View style={styles.header_container}>
@@ -47,23 +50,27 @@ const styles = StyleSheet.create({
   },
   content_container: {
     flex: 1,
-    margin: 2
+    margin: 2,
+    color:'white',
   },
   header_container: {
     flex: 2,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    color:'white',
   },
   title_text: {
     fontWeight: 'bold',
     fontSize: 15,
     flex: 1,
     flexWrap: 'wrap',
-    paddingRight: 5
+    paddingRight: 5,
+    color:'white',
   },
   vote_text: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: '#666666'
+    color: '#666666',
+    color:'white',
   },
   description_container: {
     flex: 6
@@ -72,13 +79,16 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: '#666666',
     marginTop:2,
+    color:'white',
   },
   date_container: {
-    flex: 1
+    flex: 1,
+    color:'white',
   },
   date_text: {
     textAlign: 'right',
-    fontSize: 14
+    fontSize: 14,
+    color:'white',
   }
 })
 
