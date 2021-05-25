@@ -19,32 +19,27 @@ class Search extends React.Component {
     }
   }
 
-  
   _loadFilms() {
     if (this.searchedText.length > 0) {
       this.setState({ isLoading: true }) // Lancement du chargement
       getFilmsFromApiWithSearchedText(this.searchedText).then(data => {
           this.setState({ 
-           films: data.results,
-            isLoading: false // Arrêt du chargement
+          films: data.results,
+          isLoading: false // Arrêt du chargement
           })
       })
     }
-}
+}  
 _displayLoading() {
   if (this.state.isLoading) {
     return (
       <View style={styles.loading_container}>
-        <ActivityIndicator size='large' />
+         <ActivityIndicator size="large" color="#00ff00"/>
         {/* Le component ActivityIndicator possède une propriété size pour définir la taille du visuel de chargement : small ou large. Par défaut size vaut small, on met donc large pour que le chargement soit bien visible */}
       </View>
     )
   }
 }
-
-
-// ...
-
  _searchTextInputChanged(text) {
   this.searchedText = text // Modification du texte recherché à chaque saisie de texte, sans passer par le setState comme avant
 }
@@ -59,14 +54,14 @@ _displayLoading() {
         {/* Ici j'ai simplement repris l'exemple sur la documentation de la FlatList */}
       </View>
       <FlatList
-          data={this.state.films}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({item}) => <FilmItem film={item}/>}
-          
+          data={this.state.films}
         />
+        {this._displayLoading()}
       <View style={styles.screenContainer}>
+        
       <Button style={{borderRadius: 5}} title="Rechercher votre film" color="#9acd32" onPress={() => this._loadFilms()}/>
-      
     </View>  
     </View>
 
@@ -76,8 +71,6 @@ _displayLoading() {
 
 const styles = StyleSheet.create( {
 
-  
-
   loading_container: {
     position: 'absolute',
     left: 0,
@@ -86,19 +79,16 @@ const styles = StyleSheet.create( {
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-
+    color: "#0000ff",
   },
   screenContainer: {
-    
     justifyContent: "center",
     paddingHorizontal: 60,
     paddingVertical: 11,
     backgroundColor: 'transparent', 
     borderRadius:33,
     color:'black',
-
   },
-
   main_container:{
     marginTop:40,
     flex:1,
@@ -120,8 +110,6 @@ const styles = StyleSheet.create( {
         paddingHorizontal: 10,
         borderRadius: 4,
         elevation: 3,
-        color:'black',
-    
     },
   })
 
