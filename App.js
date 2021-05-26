@@ -10,11 +10,12 @@ const App = () => (
   
     
   <View style={styles.container}>
-    <ImageBackground source={image} style={styles.image} blurRadius={2}>
+    <ImageBackground source={image} style={styles.image} blurRadius={5}>
+      
     <Search>
    
    </Search>
-      
+
     </ImageBackground>
   </View>
 );
@@ -22,12 +23,14 @@ const App = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
+    backgroundColor: "#00FF00",
   },
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#00FF00",
     
   },
   text: {

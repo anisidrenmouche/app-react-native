@@ -10,26 +10,47 @@ import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi' // import { } f
 class Search extends React.Component {
 
 
-   constructor(props) {
+  constructor(props) {
     super(props)
     this.searchedText = "" // Initialisation de notre donnée searchedText en dehors du state
+    this.page = 0
+    this.totalPages = 0
     this.state = {
       films: [],
       isLoading: false // Par défaut à false car il n'y a pas de chargement tant qu'on ne lance pas de recherche
     }
   }
 
-  _loadFilms() {
-    if (this.searchedText.length > 0) {
-      this.setState({ isLoading: true }) // Lancement du chargement
-      getFilmsFromApiWithSearchedText(this.searchedText).then(data => {
-          this.setState({ 
-          films: data.results,
+
+_loadFilms() {
+  if (this.searchedText.length > 0) {
+    this.setState({ isLoading: true }) // Lancement du chargement
+    getFilmsFromApiWithSearchedText(this.searchedText, this.page+1).then(data => {
+        this.page = data.page
+        this.totalPages = data.total_pages
+        this.setState({
+          films: [ ...this.state.films, ...data.results ],
           isLoading: false // Arrêt du chargement
-          })
-      })
-    }
-}  
+        })
+    })
+  }
+}
+
+_searchTextInputChanged(text) {
+  this.searchedText = text // Modification du texte recherché à chaque saisie de texte, sans passer par le setState comme avant
+}
+
+
+_searchFilms() {
+  this.page = 0
+  this.totalPages = 0
+  this.setState({
+    films: [],
+  }, () => {
+      this._loadFilms()
+  })
+}
+
 _displayLoading() {
   if (this.state.isLoading) {
     return (
@@ -40,15 +61,12 @@ _displayLoading() {
     )
   }
 }
- _searchTextInputChanged(text) {
-  this.searchedText = text // Modification du texte recherché à chaque saisie de texte, sans passer par le setState comme avant
-}
 
   render() {
     console.log(this.state.isLoading);
     return (
       <View style={styles.main_container}>
-        <TextInput onSubmitEditing= {() => this._loadFilms()} onChangeText={(text) => this._searchTextInputChanged(text)} style={styles.TextInput} placeholder="Titre du film"/>
+        <TextInput onSubmitEditing= {() => this._searchFilms()} onChangeText={(text) => this._searchTextInputChanged(text)} style={styles.TextInput} placeholder="Titre du film"/>
         <View style={{marginTop:1, }}>
         
         {/* Ici j'ai simplement repris l'exemple sur la documentation de la FlatList */}
@@ -61,7 +79,7 @@ _displayLoading() {
         {this._displayLoading()}
       <View style={styles.screenContainer}>
         
-      <Button style={{borderRadius: 5}} title="Rechercher votre film" color="#9acd32" onPress={() => this._loadFilms()}/>
+      <Button style={{borderRadius: 5}} title="Rechercher votre film" color="#9acd32" onPress={() => this._searchFilms()}/>
     </View>  
     </View>
 

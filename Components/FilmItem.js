@@ -13,7 +13,6 @@ class FilmItem extends React.Component {
             <Image
               style={styles.image}
               source={{uri: getImageFromApi(film.poster_path)}}
-
             />
             <View style={styles.content_container}>
               <View style={styles.header_container}>
