@@ -1,15 +1,16 @@
 // Components/FilmItem.js
 
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { getImageFromApi } from '../API/TMDBApi'
 
 
 class FilmItem extends React.Component {
     render() {
-        const film = this.props.film
+      const { film, displayDetailForFilm } = this.props
         return (
-          <View style={styles.main_container}>
+          <TouchableOpacity style={styles.main_container}
+          onPress={() => displayDetailForFilm(film.id)}>
             <Image
               style={styles.image}
               source={{uri: getImageFromApi(film.poster_path)}}
@@ -26,7 +27,7 @@ class FilmItem extends React.Component {
                 <Text style={styles.date_text}>Sorti le {film.release_date}</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )
     }
 }
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 180,
     margin: 4,
-    backgroundColor: 'gray',
     borderRadius:20,
     
   },
@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: 'wrap',
     paddingRight: 5,
-    color:'white',
+    color:'black',
   },
   vote_text: {
     fontWeight: 'bold',
     fontSize: 18,
     color: '#666666',
-    color:'white',
+    color:'black',
   },
   description_container: {
     flex: 6
@@ -78,16 +78,16 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: '#666666',
     marginTop:2,
-    color:'white',
+    color:'black',
   },
   date_container: {
     flex: 1,
-    color:'white',
+    color:'black',
   },
   date_text: {
     textAlign: 'right',
     fontSize: 14,
-    color:'white',
+    color:'black',
   }
 })
 

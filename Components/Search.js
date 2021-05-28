@@ -50,6 +50,11 @@ _searchFilms() {
       this._loadFilms()
   })
 }
+_displayDetailForFilm = (idFilm) => {
+  console.log("Display film with id " + idFilm)
+  this.props.navigation.navigate("FilmDetail")
+}
+
 
 _displayLoading() {
   if (this.state.isLoading) {
@@ -64,8 +69,12 @@ _displayLoading() {
 
   render() {
     console.log(this.state.isLoading);
+    const { film, displayDetailForFilm } = this.props
+
     return (
-      <View style={styles.main_container}>
+      <View style={styles.main_container}
+      onPress={() => displayDetailForFilm(film.id)}>
+        
         <TextInput onSubmitEditing= {() => this._searchFilms()} onChangeText={(text) => this._searchTextInputChanged(text)} style={styles.TextInput} placeholder="Titre du film"/>
         <View style={{marginTop:1, }}>
         
@@ -73,13 +82,14 @@ _displayLoading() {
       </View>
       <FlatList
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({item}) => <FilmItem film={item}/>}
+          renderItem={({item}) => <FilmItem film={item} 
+          displayDetailForFilm={this._displayDetailForFilm}/>}
           data={this.state.films}
         />
         {this._displayLoading()}
       <View style={styles.screenContainer}>
         
-      <Button style={{borderRadius: 5}} title="Rechercher votre film" color="#9acd32" onPress={() => this._searchFilms()}/>
+      <Button style={{borderRadius: 5}} title="Rechercher votre film ici " color="#9acd32" onPress={() => this._searchFilms()}/>
     </View>  
     </View>
 
@@ -115,7 +125,7 @@ const styles = StyleSheet.create( {
   },
     TextInput: {
         marginLeft:5,
-        marginTop:20,
+        marginTop:-34,
         marginRight:5,
         height:50,
         borderColor:'green',

@@ -3,6 +3,7 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import FilmItem from './Components/FilmItem';
 import Search from'./Components/Search';
+import Navigation from './Navigation/Navigation';
 
 const image = { uri: "https://fr.web.img2.acsta.net/pictures/19/04/04/09/04/0472053.jpg" };
 
@@ -11,12 +12,12 @@ const App = () => (
     
   <View style={styles.container}>
     <ImageBackground source={image} style={styles.image} blurRadius={5}>
-      
-    <Search>
-   
-   </Search>
+     
+    
+      <Navigation/>
 
     </ImageBackground>
+
   </View>
 );
 
