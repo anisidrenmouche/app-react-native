@@ -9,16 +9,18 @@ const SearchStackNavigator = createStackNavigator({
   Search: {
     screen: Search,
     navigationOptions: {
-      title: 'Rechercher ICI',
+      title: 'Rechercher votre film ',
     }
     
   },
   
   FilmDetail: { // Encore une fois j'ai mis le même nom que celui du component mais libre à vous de choisir un nom différent
-    screen: FilmDetail
-  }
+    screen: FilmDetail,
+    navigationOptions: {
+      title: 'Detail du film',
+    }
 
-
+  },
   
 })
 
