@@ -35,7 +35,7 @@ class FilmDetail extends React.Component {
           />
         <View style={styles.content_container}>
         <View style={styles.header_container}>
-        <Text style={styles.title_text}>{this.props.film == undefined ? "" : this.props.film.title}</Text>
+        <Text style={styles.title_text}>jfjff{this.props.film == undefined ? "" : this.props.film.title}</Text>
         <Text style={styles.vote_text}>{this.props.film == undefined ? "" : this.props.film.vote_average}</Text>
         </View>
         <View style={styles.description_container}>
