@@ -10,59 +10,59 @@ class FilmDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      film: undefined, // Pour l'instant on n'a pas les infos du film, on initialise donc le film à undefined.
-      isLoading: true // A l'ouverture de la vue, on affiche le chargement, le temps de récupérer le détail du film
+      film: undefined,
+      isLoading: true
     }
   }
 
-  componentDidMount () {
-    getFilmDetailFromApi(this.state).then(data =>{
-      this.setState ({
+  componentDidMount() {
+    getFilmDetailFromApi(this.props.navigation.state.params.idFilm).then(data => {
+      this.setState({
         film: data,
         isLoading: false
       })
     })
   }
 
-  _displayFilm() {
-    const { film } = this.state
-    if (film != undefined) {
-      return (
-        <ScrollView style={styles.main_container}>
-        <Image
-            style={styles.image}
-            source={{uri: getImageFromApi(film.backdrop_path)}}
-          />
-        <View style={styles.content_container}>
-        <View style={styles.header_container}>
-        <Text style={styles.title_text}>jfjff{this.props.film == undefined ? "" : this.props.film.title}</Text>
-        <Text style={styles.vote_text}>{this.props.film == undefined ? "" : this.props.film.vote_average}</Text>
-        </View>
-        <View style={styles.description_container}>
-        <Text style={styles.description_text} numberOfLines={6}>{this.props.film == undefined ? "" : this.props.film.overview}</Text>
-        </View>
-        <View style={styles.date_container}>
-        <Text style={styles.date_text}>Sorti le {this.props.film == undefined ? "" : this.props.film.release_date}</Text>
-        </View>
-        </View>
-        </ScrollView>
-        )
-        }
-        }
-
   _displayLoading() {
     if (this.state.isLoading) {
       return (
         <View style={styles.loading_container}>
-           <ActivityIndicator size="large" color="#00ff00"/>
-          {/* Le component ActivityIndicator possède une propriété size pour définir la taille du visuel de chargement : small ou large. Par défaut size vaut small, on met donc large pour que le chargement soit bien visible */}
+          <ActivityIndicator size='large' />
         </View>
       )
     }
   }
 
-  render() {
+  _displayFilm() {
     const { film } = this.state
+    if (film != undefined) {
+      return (
+        <ScrollView style={styles.scrollview_container}>
+          <Image
+            style={styles.image}
+            source={{uri: getImageFromApi(film.backdrop_path)}}
+          />
+          <Text style={styles.title_text}>{film.title}</Text>
+          <Text style={styles.description_text}>{film.overview}</Text>
+          <Text style={styles.default_text}>Sorti le {moment(new Date(film.release_date)).format('DD/MM/YYYY')}</Text>
+          <Text style={styles.default_text}>Note : {film.vote_average} / 10</Text>
+          <Text style={styles.default_text}>Nombre de votes : {film.vote_count}</Text>
+          <Text style={styles.default_text}>Budget : {numeral(film.budget).format('0,0[.]00 $')}</Text>
+          <Text style={styles.default_text}>Genre(s) : {film.genres.map(function(genre){
+              return genre.name;
+            }).join(" / ")}
+          </Text>
+          <Text style={styles.default_text}>Companie(s) : {film.production_companies.map(function(company){
+              return company.name;
+            }).join(" / ")}
+          </Text>
+        </ScrollView>
+      )
+    }
+  }
+
+  render() {
     return (
       <View style={styles.main_container}>
         {this._displayLoading()}
@@ -86,7 +86,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   scrollview_container: {
-    flex:1,
+    flex: 1
+  },
+  image: {
+    height: 169,
+    margin: 5,
+    marginTop:20
+  },
+  title_text: {
+    fontWeight: 'bold',
+    fontSize: 35,
+    flex: 1,
+    flexWrap: 'wrap',
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    color: '#000000',
+    textAlign: 'center'
+  },
+  description_text: {
+    fontStyle: 'italic',
+    color: '#666666',
+    margin: 5,
+    marginBottom: 15
+  },
+  default_text: {
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 5,
   }
 })
 
